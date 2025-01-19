@@ -1,0 +1,21 @@
+{
+  "name": "gutenberg-content-convert",
+  "version": "1.0.0",
+  "license": "GPL-2.0-or-later",
+  "author": {
+    "name": "Christian Chung",
+    "url": "https://github.com/christianc1/wp-block-conversion-api"
+  },
+  "scripts": {
+    "postinstall": "if [ ! -f .env ]; then cp .env.example .env; fi",
+    "dev": "serverless dev",
+    "deploy": "serverless deploy",
+    "package": "serverless package"
+  },
+  "dependencies": {
+    "@wordpress/block-library": "^9.16.0",
+    "@wordpress/blocks": "^14.5.0",
+    "jsdom": "^26.0.0",
+    "jsdom-global": "^3.0.2"
+  }
+}

@@ -1,0 +1,40 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: christianc1
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: gutenberg-content-convert
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: gutenberg-content-convert
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+build:
+  esbuild:
+    bundle: true
+    target: "node20"
+    platform: "node"
+    external:
+      - 'jsdom'
+
+functions:
+  getBlocks:
+    handler: handler.getBlocks
+    timeout: 29
+    events:
+      - http:
+          path: getBlocks
+          method: post
+          cors: true
+    environment:
+      LAMBDA_SERVICE_AUTH_TOKEN: ${env:LAMBDA_SERVICE_AUTH_TOKEN}
+  getMarkup:
+    handler: handler.getMarkup
+    timeout: 29
+    events:
+      - http:
+          path: getMarkup
+          method: post
+          cors: true
+    environment:
+      LAMBDA_SERVICE_AUTH_TOKEN: ${env:LAMBDA_SERVICE_AUTH_TOKEN}

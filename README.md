@@ -9,12 +9,13 @@ After cloning this repository:
 1. Install Serverless: `npm i serverless -g`
 2. Install the project dependencies: `npm install`
 3. Add your own token to the .env file to make authorized requests.
+4. Optionally, adjust the other environmental variables in `.env` to link and identify the service in Serverless, see [Serverless Documentation](https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml).
 
 ## Usage
 
 ### Important Notes on Usage
 
-When used as a migration utility, especially a migration that you're running locally, my recommendation would be to use this utility as a local utility on your machine. See [Local Development](#local-development) on how to do that. That way, you're not incurring costs of running this all in a cloud and potentially incurring the costs of compute time. Of course, there are also scenarios where the API must be publicly available, for example, running a migration on a remote server. In those instances, you should be aware of the potential cost. AWS has tools to help you estimate. Cold starts on Lambda are resource-intensive, mainly due to the need to shim a virtual DOM (the DOM is not available on Lambda Node.js runtimes) and then setting up a Block Editor environment where core blocks are registered. Subsequent requests to provisioned Lambdas are less intensive and typical response times are in the milliseconds. I recommend testing things out after deploying to AWS to get a feel for cold start times and setting request timeouts appropriately.
+When used as a migration utility, especially a migration that you're running locally, my recommendation would be to use this utility as a local utility on your machine. See [Local Development](#local-development) on how to do that. That way, you're not incurring costs of running this all in a cloud and potentially incurring the costs of compute time. Of course, there are also scenarios where the API must be publicly available, for example, running a migration on a remote server. In those instances, you should be aware of the potential cost. AWS has tools to help you estimate. Cold starts on Lambda are resource-intensive, mainly due to the need to shim a virtual DOM (the DOM is not available on Lambda Node.js runtimes) and then setting up a Block Editor environment where core blocks are registered. Subsequent requests to provisioned Lambdas are less intensive and typical response times are in the milliseconds. I recommend testing things out after deploying to AWS to get a feel for cold start times and setting request timeouts appropriately or looking into Provisioned Concurrency if you need to keep execution time consistently low.
 
 ### Deployment
 

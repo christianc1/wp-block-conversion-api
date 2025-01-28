@@ -1,11 +1,14 @@
-// Set up DOM environment
+import filterEmptyParagraphsDeep from './utils/filters/filterEmptyParagraphsDeep';
+
+// Set up DOM environment. This needs to be required, cjs doesn't allow top level await.
 require('jsdom-global')();
 global.MutationObserver = window.MutationObserver;
 
+// These need to be required, not imported, and require the DOM to be set up.
 const { rawHandler, serialize } = require('@wordpress/blocks');
 const { registerCoreBlocks } = require('@wordpress/block-library');
 
-// Register core blocks
+// Register core blocks.
 registerCoreBlocks();
 
 const authenticateRequest = (event) => {
@@ -76,8 +79,11 @@ module.exports.getMarkup = async (event) => {
     // Convert raw HTML to blocks
     const blocks = rawHandler({ HTML: htmlContent });
 
+    // Run filters
+    const filteredBlocks = filterEmptyParagraphsDeep(blocks);
+
     // Serialize the blocks
-    const serializedBlocks = serialize(blocks);
+    const serializedBlocks = serialize(filteredBlocks);
 
     return {
       statusCode: 200,
